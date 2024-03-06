@@ -5,20 +5,12 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-// city.airport_code
-
-// <ul className="list-group mb-2">
-//   {cities.map((city, i) => (
-//     <li className="list-group-item">{city.id}</li>
-//   ))}
-// </ul>
-
-export default function Cities({ cities, loading, getCityFrom }) {
-  const [city, setCity] = React.useState('')
-  console.log('city = ', city)
+export default function Cities({ cities, loading, getAirport, direction }) {
+  const [city, setCity] = useState('')
+  // const [aiport, setAirport] = useState('')
   const handleChange = (event) => {
     setCity(event.target.value)
-    getCityFrom(city)
+    getAirport(event.target.value)
   }
 
   if (loading) {
@@ -26,9 +18,9 @@ export default function Cities({ cities, loading, getCityFrom }) {
   }
 
   return (
-    <Box sx={{ minWidth: 120, maxWidth: 190 }}>
+    <Box sx={{ minWidth: 120, maxWidth: 200 }}>
       <FormControl fullWidth>
-        <InputLabel id="CityFrom-label">From</InputLabel>
+        <InputLabel id="CityFrom-label">{direction}</InputLabel>
         <Select
           defaultValue={null}
           labelId="city-from-label"
@@ -38,8 +30,10 @@ export default function Cities({ cities, loading, getCityFrom }) {
           onChange={handleChange}
         >
           {cities.map((city, i) => (
-            <MenuItem value={city.city.en} key={i}>
+            <MenuItem value={city.airport_code} key={i}>
               {city.city.en}
+              {'\u00A0'}
+              {city.airport_code}
             </MenuItem>
           ))}
         </Select>
